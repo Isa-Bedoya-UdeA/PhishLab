@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-phish-bg: #08111F;
+  --color-phish-surface: #0D1B2A;
+  --color-phish-card: #122438;
+  --color-phish-border: #263A50;
+  --color-phish-turquoise: #35E0D0;
+  --color-phish-cyan: #48C8F5;
+  --color-phish-lilac-light: #C4B5FD;
+  --color-phish-lilac: #A78BFA;
+  --color-phish-text: #F1F5F9;
+  --color-phish-muted: #A7B5C7;
+  --color-phish-correct: #4ADE80;
+  --color-phish-incorrect: #FB7185;
+  --color-phish-warning: #FBBF24;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Base custom styles */
+body {
+  background-color: #08111F;
+  color: #F1F5F9;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Focus styles for keyboard accessibility */
+:focus-visible {
+  outline: 2px solid #35E0D0;
+  outline-offset: 2px;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0D1B2A;
+}
+::-webkit-scrollbar-thumb {
+  background: #263A50;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #35E0D0;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

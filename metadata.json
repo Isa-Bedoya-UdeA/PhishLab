@@ -1,0 +1,8 @@
+{
+  "name": "PhishLab",
+  "description": "Laboratorio educativo interactivo de ciberseguridad para reconocer mensajes de phishing y analizar señales lingüísticas, visuales y contextuales.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

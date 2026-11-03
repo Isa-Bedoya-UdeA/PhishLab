@@ -1,0 +1,757 @@
+# PROMPT MAESTRA — DESARROLLO DE PHISHLAB
+
+## 1. Rol, objetivo y forma de trabajo
+
+Actúa como un equipo sénior de desarrollo de software compuesto por un arquitecto de software, ingeniero full-stack, diseñador UX/UI, especialista en accesibilidad y experto en educación sobre ciberseguridad.
+
+Construye una aplicación web educativa completa llamada **PhishLab**, destinada a ayudar a estudiantes universitarios sin formación especializada en ciberseguridad a reconocer mensajes de phishing mediante ejercicios interactivos.
+
+No quiero solamente un prototipo visual, una landing page ni pantallas estáticas. Necesito una aplicación funcional, con navegación real, ejercicios completos, selección interactiva de palabras, evaluación determinista, retroalimentación explicativa, estadísticas y persistencia local.
+
+Implementa directamente el proyecto en el entorno disponible de Google AI Studio Build. Genera los archivos, utiliza las dependencias compatibles, ejecuta las pruebas que permita el entorno y corrige los errores detectados.
+
+Prioriza la funcionalidad, la coherencia educativa y la calidad visual. No detengas el desarrollo después de generar la estructura inicial o la pantalla de inicio.
+
+## 2. Contexto de investigación
+
+La aplicación apoyará una investigación orientada a responder la pregunta:
+
+**¿Qué características lingüísticas, visuales y contextuales de los mensajes de phishing dificultan su identificación por parte de estudiantes universitarios sin formación en ciberseguridad?**
+
+Los ejercicios deben permitir evaluar la identificación de:
+
+- **Señales lingüísticas:** urgencia, amenazas, presión, autoridad, promesas, solicitudes inusuales y formulaciones destinadas a provocar una reacción.
+- **Señales visuales:** identidad gráfica, logotipos, formato, presentación institucional y apariencia de legitimidad.
+- **Señales contextuales:** dirección del remitente, dominio, enlaces, solicitudes de información, coherencia con la situación y correspondencia con acciones que el usuario haya realizado previamente.
+
+La aplicación debe distinguir entre la clasificación del mensaje y la identificación de indicios específicos. Son dos tareas relacionadas, pero diferentes.
+
+No debe afirmar que una señal aislada demuestra necesariamente que un mensaje sea fraudulento.
+
+## 3. Principio fundamental: realismo de los mensajes
+
+**Todos los ejercicios deben parecer situaciones que una persona podría encontrar en su correo electrónico cotidiano.** No construyas ejercicios artificiales en los que la respuesta sea obvia por utilizar dominios absurdos, remitentes caricaturescos, faltas ortográficas exageradas o amenazas poco creíbles.
+
+### 3.1. Advertencia general sobre el carácter ficticio
+
+Al entrar por primera vez a la aplicación, presenta un aviso claro y profesional, con una opción para continuar:
+
+**Título:** Entorno de simulación educativa.
+
+**Mensaje:** Todos los correos, remitentes, instituciones, empresas, direcciones, enlaces, archivos y situaciones que aparecen en PhishLab han sido creados o adaptados con fines educativos. No representan comunicaciones reales ni deben interpretarse como evidencia sobre una organización existente. Los mensajes se presentan en un entorno simulado y no se envían ni se reciben correos reales.
+
+**Botón:** Entendido, comenzar.
+
+El aviso puede volver a consultarse desde una sección informativa. No muestres etiquetas como «correo falso», «phishing» o «correo seguro» antes de que el participante responda.
+
+### 3.2. Reglas de realismo
+
+Aplica estas reglas a todos los ejercicios:
+
+1. No utilices dominios terminados en `.example`, direcciones como `test@test.com`, nombres evidentemente absurdos ni enlaces que delaten inmediatamente la respuesta.
+2. Utiliza nombres, direcciones, asuntos, fechas, firmas y diseños verosímiles, propios de situaciones académicas, comerciales, laborales y de servicios digitales.
+3. Los nombres de las instituciones, empresas, servicios y personas deben ser ficticios, pero plausibles. Evita suplantar directamente a marcas, universidades, bancos o empresas reales.
+4. Las direcciones de correo y las URL deben parecer coherentes con la situación presentada, sin que su apariencia por sí sola revele la clasificación.
+5. Utiliza direcciones ficticias de apariencia realista, pero trata las URL exclusivamente como datos de simulación: nunca deben abrir sitios externos, enviar información ni ejecutar acciones.
+6. No afirmes que un dominio inventado está registrado, activo, es malicioso o pertenece a una organización real. La aplicación debe trabajar con los datos de referencia del ejercicio, no con comprobaciones reales de dominios.
+7. Los mensajes legítimos también deben incluir enlaces, fechas límite, lenguaje formal, solicitudes razonables y diseños profesionales cuando el contexto lo justifique.
+8. Los mensajes de phishing también deben poder estar bien redactados, usar una identidad visual convincente y tener una estructura profesional.
+9. No utilices los errores gramaticales, la falta de un logotipo, el remitente desconocido o la urgencia como prueba automática de fraude.
+10. No marques todas las palabras de un correo sospechoso como indicios. Cada elemento debe anotarse según su relevancia específica para la situación.
+11. Incluye situaciones en las que la información sea insuficiente para concluir que un mensaje es legítimo o fraudulento.
+12. La dificultad debe proceder del análisis de las evidencias y del contexto, no de pistas artificiales.
+
+Los ejercicios deben ser equilibrados: el usuario no debe poder acertar simplemente desconfiando de todos los correos.
+
+### 3.3. Seguridad de los enlaces simulados
+
+Los enlaces deben mostrarse como lo haría un cliente de correo, pero deben ser elementos no navegables.
+
+No uses etiquetas HTML con destinos externos funcionales, no cargues imágenes desde dominios de terceros y no descargues archivos.
+
+Si el usuario selecciona o inspecciona un enlace, la aplicación puede mostrar su dirección aparente en un panel interno. Esta acción no debe abrir el navegador.
+
+## 4. Tecnologías y restricciones
+
+La aplicación debe poder utilizarse sin contratar servicios de pago para sus funcionalidades esenciales.
+
+Utiliza preferentemente:
+
+- TypeScript en modo estricto.
+- React.
+- Vite, si es compatible con el entorno existente.
+- Tailwind CSS.
+- shadcn/ui cuando su integración sea compatible con el proyecto.
+- Lucide React para iconografía.
+- Motion para React o Framer Motion, según las dependencias disponibles.
+- React Router si se necesitan rutas independientes.
+- Zod para validación de datos cuando aporte valor.
+- Vitest y React Testing Library para pruebas, si pueden ejecutarse en el entorno.
+- `localStorage` para persistencia inicial.
+- Archivos TypeScript tipados para los ejercicios iniciales.
+
+Prefiere pnpm cuando el entorno lo permita. Si Google AI Studio administra automáticamente las dependencias con otra herramienta, conserva la configuración funcional.
+
+No incorpores modelos generativos, servicios de IA de pago, APIs externas, bases de datos remotas, autenticación ni envío real de correo. Ninguna de estas dependencias es necesaria para la primera versión.
+
+No construyas un backend ni una arquitectura de microservicios innecesarios.
+
+## 5. Arquitectura del software
+
+Implementa una arquitectura modular, con separación entre presentación, lógica de aplicación, dominio e infraestructura.
+
+Estructura orientativa:
+
+```text
+src/
+  app/
+    App.tsx
+    routes.tsx
+    providers.tsx
+  components/
+    ui/
+    layout/
+    feedback/
+    email/
+    charts/
+  features/
+    dashboard/
+    exercises/
+    results/
+    progress/
+    settings/
+  domain/
+    entities/
+    types/
+    rules/
+    services/
+  application/
+    use-cases/
+    dto/
+  infrastructure/
+    repositories/
+    storage/
+    seed/
+  shared/
+    constants/
+    utils/
+    validation/
+  styles/
+    globals.css
+  tests/
+```
+
+Adapta la estructura a las convenciones existentes si es necesario, conservando la separación de responsabilidades.
+
+### Principios SOLID
+
+- **Responsabilidad única:** el evaluador no renderiza componentes; los componentes no calculan directamente todas las métricas.
+- **Abierto/cerrado:** añadir ejercicios nuevos no debe exigir modificar el algoritmo principal de evaluación.
+- **Sustitución de Liskov:** las implementaciones de los repositorios deben respetar sus contratos.
+- **Segregación de interfaces:** utiliza contratos pequeños y específicos para recuperar ejercicios y guardar intentos.
+- **Inversión de dependencias:** los casos de uso deben depender de abstracciones de repositorio y no directamente de `localStorage`.
+
+### Patrones de diseño
+
+Implementa de forma pragmática:
+
+1. Repository para acceder a los ejercicios y almacenar intentos.
+2. Strategy para encapsular los cálculos de puntuación.
+3. Dependency Injection para proporcionar repositorios y servicios a los casos de uso.
+4. Factory o funciones constructoras tipadas únicamente cuando faciliten la creación consistente de datos.
+
+Evita abstracciones innecesarias, clases vacías y sobreingeniería.
+
+## 6. Identidad visual
+
+Crea una interfaz oscura, moderna, tecnológica y educativa, inspirada en un laboratorio de ciberseguridad. La interacción con los mensajes debe ser el centro de la experiencia.
+
+### Paleta cromática
+
+- Fondo principal: `#08111F`.
+- Fondo secundario: `#0D1B2A`.
+- Tarjetas: `#122438`.
+- Bordes: `#263A50`.
+- Turquesa principal: `#35E0D0`.
+- Cyan secundario: `#48C8F5`.
+- Lila claro: `#C4B5FD`.
+- Lila secundario: `#A78BFA`.
+- Texto principal: `#F1F5F9`.
+- Texto secundario: `#A7B5C7`.
+- Correcto: `#4ADE80`.
+- Incorrecto: `#FB7185`.
+- Advertencia: `#FBBF24`.
+
+Utiliza gradientes discretos entre cyan, turquesa y lila. Evita saturar la interfaz con efectos luminosos.
+
+### Estilo
+
+- Tipografía moderna y legible.
+- Jerarquía visual consistente.
+- Tarjetas con bordes sutiles y esquinas redondeadas.
+- Microinteracciones suaves.
+- Animaciones con propósito.
+- Estados de carga, error, éxito y ausencia de datos.
+- Foco visible y navegación por teclado.
+- Contraste suficiente.
+- Compatibilidad con preferencias de movimiento reducido.
+
+No crees un dashboard genérico repleto de tarjetas sin jerarquía.
+
+## 7. Navegación y funcionalidades
+
+### 7.1. Dashboard
+
+Debe incluir:
+
+- Nombre y descripción de PhishLab.
+- Botón «Comenzar a entrenar».
+- Ejercicios completados.
+- Porcentaje de clasificación correcta.
+- Puntaje medio de detección de indicios.
+- Último intento.
+- Progreso general.
+- Errores de clasificación más frecuentes.
+- Acceso al historial y a la bandeja de entrada.
+
+Si no existen intentos, muestra un estado inicial atractivo y no cifras ficticias.
+
+### 7.2. Bandeja de entrada simulada
+
+Representa una bandeja de correo con:
+
+- Nombre del remitente.
+- Dirección de correo.
+- Asunto.
+- Fecha.
+- Vista previa.
+- Indicador de lectura.
+- Filtros por categoría de referencia únicamente en las herramientas de administración o desarrollo, nunca como pista para el participante.
+
+Los mensajes deben abrirse dentro de la aplicación y mostrar su contenido completo, incluidos encabezados, cuerpo, enlaces aparentes y adjuntos simulados.
+
+La clasificación de referencia nunca debe ser visible antes de la respuesta.
+
+### 7.3. Clasificación del mensaje
+
+Presenta tres opciones mutuamente excluyentes:
+
+- «Es legítimo».
+- «Es sospechoso o probablemente phishing».
+- «No tengo suficiente información para decidir».
+
+No selecciones ninguna opción automáticamente.
+
+El participante debe confirmar su respuesta antes de acceder a la retroalimentación.
+
+### 7.4. Selección interactiva de palabras y elementos
+
+Esta es una funcionalidad prioritaria.
+
+Cada palabra del cuerpo del mensaje debe poder seleccionarse y deseleccionarse individualmente mediante clic o toque. También deben poder seleccionarse los elementos relevantes de la cabecera y la interfaz del correo:
+
+- Nombre visible del remitente.
+- Dirección del remitente.
+- Dominio.
+- Asunto.
+- Palabras del cuerpo.
+- Enlaces aparentes.
+- Nombres de adjuntos.
+- Elementos visuales relevantes.
+
+No implementes esta funcionalidad como un simple resaltador de párrafos ni como una caja de texto seleccionable libremente.
+
+Cada elemento debe ser un componente interactivo con un identificador estable y un estado propio.
+
+Antes de responder, muestra:
+
+- Elementos sin seleccionar.
+- Elementos seleccionados.
+- Instrucción clara para seleccionar las palabras o partes del correo que considere relevantes.
+- Acción para limpiar la selección.
+
+Después de responder, muestra:
+
+- Indicios relevantes correctamente identificados.
+- Indicios relevantes que no detectó.
+- Selecciones que no aportaban evidencia suficiente.
+- Explicaciones específicas.
+
+Los estados deben distinguirse por color, texto e iconografía; el color no debe ser el único indicador.
+
+El usuario debe poder usar la aplicación con teclado.
+
+### 7.5. Resultados y retroalimentación
+
+Al completar un ejercicio, presenta:
+
+- Clasificación de referencia.
+- Clasificación del participante.
+- Acierto o error de clasificación.
+- Puntaje de detección de indicios.
+- Puntaje final.
+- Verdaderos positivos, falsos positivos, falsos negativos y verdaderos negativos.
+- Elementos correctamente identificados.
+- Elementos relevantes omitidos.
+- Elementos seleccionados incorrectamente.
+- Explicación de cada señal.
+- Recomendación práctica.
+- Botón para continuar.
+- Botón para revisar el mensaje.
+- Botón para regresar al dashboard.
+
+No enseñes reglas absolutas que no estén justificadas. Por ejemplo, la presencia de urgencia no convierte automáticamente un mensaje en phishing.
+
+### 7.6. Historial y progreso
+
+Implementa:
+
+- Historial de intentos.
+- Ejercicios completados.
+- Porcentaje de clasificación correcta.
+- Evolución de las puntuaciones.
+- Errores frecuentes.
+- Resultados por categorías lingüística, visual y contextual.
+- Falsos positivos y falsos negativos.
+- Revisión de intentos anteriores.
+
+No presentes estadísticas engañosas ni conclusiones sólidas a partir de muy pocos intentos.
+
+### 7.7. Configuración
+
+Incluye:
+
+- Preferencias de animación y sonido si corresponde.
+- Información sobre el proyecto.
+- Acceso al aviso de simulación.
+- Acción para borrar el progreso local, con confirmación.
+
+No incluyas autenticación en esta versión.
+
+## 8. Modelo de datos
+
+Utiliza TypeScript estricto y evita `any`.
+
+Implementa modelos equivalentes a los siguientes:
+
+```ts
+type MessageClassification =
+  | "legitimate"
+  | "phishing"
+  | "insufficient_information";
+
+type SignalCategory =
+  | "linguistic"
+  | "visual"
+  | "contextual";
+
+type EmailElementType =
+  | "word"
+  | "sender_name"
+  | "sender_address"
+  | "domain"
+  | "subject"
+  | "link"
+  | "attachment"
+  | "visual_element";
+
+interface EmailElement {
+  id: string;
+  text: string;
+  type: EmailElementType;
+  category?: SignalCategory;
+  isRelevantClue: boolean;
+  explanation?: string;
+}
+
+interface Exercise {
+  id: string;
+  title: string;
+  difficulty: "beginner" | "intermediate" | "advanced";
+  scenario: string;
+  senderName: string;
+  senderAddress: string;
+  subject: string;
+  dateLabel: string;
+  preview: string;
+  bodyElements: EmailElement[];
+  metadataElements: EmailElement[];
+  apparentLinks: Array<{
+    id: string;
+    label: string;
+    displayedUrl: string;
+    elementId: string;
+  }>;
+  attachments: Array<{
+    id: string;
+    name: string;
+    elementId: string;
+  }>;
+  referenceClassification: MessageClassification;
+  referenceExplanation: string;
+  signals: Array<{
+    elementIds: string[];
+    category: SignalCategory;
+    explanation: string;
+  }>;
+  learningObjective: string;
+  practicalRecommendation: string;
+}
+```
+
+Define también los modelos `ExerciseMetrics` y `ExerciseAttempt` para almacenar los resultados calculados y las respuestas del participante.
+
+Todos los elementos deben tener identificadores estables y únicos dentro del ejercicio.
+
+El cuerpo debe construirse a partir de los elementos ordenados, preservando espacios y puntuación. No mantengas una cadena independiente que pueda quedar desincronizada con los elementos evaluables.
+
+Los enlaces y metadatos deben relacionarse con sus elementos mediante IDs y no generar puntos de evaluación duplicados accidentalmente.
+
+## 9. Algoritmo de evaluación
+
+Implementa los cálculos como funciones puras y testeables. Las mismas respuestas y el mismo ejercicio deben producir siempre el mismo resultado.
+
+### 9.1. Evaluación de indicios
+
+Define:
+
+- \(G\): conjunto de elementos que la referencia considera indicios relevantes.
+- \(S\): conjunto de elementos seleccionados por el participante.
+- \(U\): conjunto de elementos evaluables del ejercicio.
+
+Calcula:
+
+\[
+TP = |S \cap G|
+\]
+
+\[
+FP = |S \setminus G|
+\]
+
+\[
+FN = |G \setminus S|
+\]
+
+\[
+TN = |U \setminus (S \cup G)|
+\]
+
+Donde:
+
+- TP: indicios relevantes correctamente seleccionados.
+- FP: elementos seleccionados que no estaban anotados como indicios.
+- FN: indicios relevantes que el usuario omitió.
+- TN: elementos no relevantes que el usuario dejó sin seleccionar.
+
+Calcula precisión:
+
+\[
+Precision = \frac{TP}{TP+FP}
+\]
+
+Calcula recall:
+
+\[
+Recall = \frac{TP}{TP+FN}
+\]
+
+Calcula F1:
+
+\[
+F1 = \frac{2 \cdot Precision \cdot Recall}
+{Precision+Recall}
+\]
+
+El puntaje de detección de indicios será:
+
+\[
+P_{indicios} = 100 \cdot F1
+\]
+
+Implementa el tratamiento de denominadores iguales a cero de manera explícita:
+
+- Si no hay indicios de referencia y el usuario tampoco selecciona elementos, asigna 1 a precisión, recall y F1 para esa dimensión vacía.
+- Si no hay indicios de referencia y el usuario selecciona elementos, penaliza esas selecciones y evita dividir entre cero.
+- No permitas `NaN`, `Infinity` ni errores de ejecución.
+
+El F1 debe equilibrar precisión y cobertura. No premies la selección indiscriminada de palabras.
+
+### 9.2. Clasificación del mensaje
+
+\[
+P_{clasificacion} =
+\begin{cases}
+100, & \text{si la clasificación coincide con la referencia}\\
+0, & \text{en caso contrario}
+\end{cases}
+\]
+
+La respuesta de referencia puede ser `legitimate`, `phishing` o `insufficient_information`.
+
+### 9.3. Puntaje final
+
+\[
+P_{final} =
+0.70 \cdot P_{indicios}
++
+0.30 \cdot P_{clasificacion}
+\]
+
+Redondea a un decimal solo para mostrar el resultado. Conserva la precisión interna en los cálculos.
+
+Muestra por separado los componentes de la puntuación.
+
+### 9.4. Métricas globales
+
+\[
+Accuracy =
+\frac{\text{clasificaciones correctas}}
+{\text{ejercicios completados}}
+\cdot 100
+\]
+
+Cuando no existan ejercicios completados, muestra «Sin datos».
+
+Calcula las métricas de clasificación independientemente de las métricas de selección de indicios.
+
+### 9.5. Pruebas
+
+Crea pruebas para:
+
+1. Selección perfecta de indicios.
+2. Selección parcial.
+3. Selección de elementos irrelevantes.
+4. Selección de todos los elementos.
+5. Ninguna selección.
+6. Ejercicio sin indicios de referencia.
+7. Clasificación correcta e incorrecta.
+8. Clasificación `insufficient_information`.
+9. Intento no completado.
+10. Persistencia y recuperación de métricas.
+
+## 10. Ejercicios iniciales: mínimo seis ejemplos realistas
+
+Incluye al menos seis ejercicios completos desde la primera ejecución.
+
+No basta con crear tarjetas o asuntos. Cada ejercicio debe contener un mensaje completo, sus elementos evaluables, clasificación de referencia, señales anotadas, explicaciones y recomendaciones.
+
+Todos los datos deben ser ficticios, pero plausibles. Evita utilizar `.example`, direcciones manifiestamente falsas, marcas reales o enlaces funcionales.
+
+Los siguientes escenarios son requisitos de contenido. Desarrolla cada mensaje con naturalidad y añade los metadatos necesarios.
+
+### Ejercicio 1 — Notificación de seguridad de una cuenta
+
+**Clasificación de referencia:** phishing.
+
+Escenario: un usuario recibe un mensaje que informa de una actividad inusual en su cuenta y solicita verificarla para evitar una restricción.
+
+El mensaje debe tener una presentación profesional, un asunto creíble, una firma institucional ficticia y una dirección de remitente aparentemente coherente con el servicio. No utilices faltas ortográficas exageradas ni frases caricaturescas.
+
+Incluye señales como presión temporal, petición de credenciales o un enlace cuyo contexto no coincide suficientemente con el servicio descrito.
+
+La retroalimentación debe explicar qué evidencias son relevantes y cómo comprobar la comunicación mediante un canal independiente.
+
+### Ejercicio 2 — Recordatorio académico legítimo
+
+**Clasificación de referencia:** legítimo.
+
+Escenario: una coordinación académica ficticia comunica la publicación del calendario de evaluaciones o una actividad del curso.
+
+El mensaje debe parecer una comunicación universitaria normal, con asunto, firma, fecha y formato coherentes. Puede contener un enlace aparente al campus virtual simulado.
+
+Las señales de referencia deben estar relacionadas con la coherencia del contexto, la ausencia de solicitudes de credenciales y la correspondencia entre remitente, contenido y acción descrita.
+
+La retroalimentación debe recordar que un diseño formal no demuestra por sí solo que el mensaje sea legítimo.
+
+### Ejercicio 3 — Aviso de entrega pendiente
+
+**Clasificación de referencia:** phishing.
+
+Escenario: un mensaje informa de una incidencia con una entrega y solicita una acción para evitar un retraso o una devolución.
+
+Debe parecer una notificación comercial plausible. No utilices cantidades absurdas ni amenazas exageradas.
+
+Incluye indicios contextualizados, como un cobro inesperado, una petición de datos que no se justifica y discrepancias entre la comunicación y la información disponible en el propio mensaje.
+
+Explica cómo comprobar el envío desde un canal oficial conocido, sin utilizar el enlace recibido.
+
+### Ejercicio 4 — Notificación legítima de aula virtual
+
+**Clasificación de referencia:** legítimo.
+
+Escenario: el campus virtual ficticio notifica que se ha publicado una actividad y recuerda la fecha de entrega.
+
+El mensaje puede incluir una fecha límite, un enlace aparente y una firma formal. Debe ser coherente con el contexto académico y no solicitar contraseñas por correo.
+
+La retroalimentación debe enseñar que los mensajes legítimos también pueden incluir enlaces y fechas límite. No debe presentar la ausencia de urgencia como condición para considerar legítimo un mensaje.
+
+### Ejercicio 5 — Mensaje con información insuficiente
+
+**Clasificación de referencia:** `insufficient_information`.
+
+Escenario: el usuario recibe una notificación breve que indica que un documento está disponible, sin explicar claramente qué documento es ni en qué servicio se encuentra.
+
+El remitente, el asunto y la presentación deben ser plausibles. No debe haber una señal concluyente que demuestre phishing.
+
+La retroalimentación debe explicar que la falta de contexto puede justificar la incertidumbre, pero no prueba por sí sola que exista fraude. Recomienda verificar la solicitud por un canal independiente.
+
+### Ejercicio 6 — Supuesto soporte técnico
+
+**Clasificación de referencia:** phishing.
+
+Escenario: una persona que se presenta como parte del soporte técnico informa de una incidencia y solicita un código de verificación para resolverla.
+
+El correo debe tener una firma y un tono profesionales. La clasificación debe basarse principalmente en la solicitud de un código de autenticación, la presión ejercida y la naturaleza de la acción solicitada, no en un remitente ridículo.
+
+La retroalimentación debe explicar por qué no se deben compartir códigos de autenticación y cómo contactar al soporte por canales conocidos.
+
+### Reglas de anotación de los seis ejercicios
+
+1. Divide cada cuerpo de correo en palabras y segmentos identificables, preservando el texto original.
+2. Anota solo los elementos que aporten evidencia relevante.
+3. Incluye explicaciones breves para cada señal.
+4. No marques todas las palabras de los mensajes de phishing.
+5. Incluye indicios lingüísticos, visuales y contextuales cuando el escenario lo permita.
+6. Asegúrate de que las clasificaciones de referencia coincidan con el contexto y las explicaciones.
+7. Los enlaces deben ser cadenas de texto no navegables.
+8. No incluyas direcciones reales de usuarios ni información personal.
+9. No muestres las anotaciones de referencia antes de que el participante envíe su respuesta.
+10. Mantén un equilibrio entre ejercicios legítimos, phishing e información insuficiente para evitar que el usuario aprenda una regla de respuesta basada exclusivamente en la frecuencia de cada categoría.
+
+Si incorporas más ejercicios, conserva el mismo nivel de realismo y la coherencia de las anotaciones.
+
+## 11. Persistencia local y privacidad
+
+Utiliza `localStorage` mediante una implementación propia de repositorio.
+
+Guarda:
+
+- Intentos completados.
+- ID del ejercicio.
+- Clasificación elegida.
+- IDs de los elementos seleccionados.
+- Métricas calculadas.
+- Fechas de inicio y finalización.
+- Historial de resultados.
+
+Utiliza una clave versionada, como `phishlab:v1:attempts`.
+
+Valida los datos recuperados y maneja errores de lectura, escritura, almacenamiento lleno y datos corruptos.
+
+El catálogo de ejercicios debe existir en el código y funcionar sin conexión a una base de datos remota.
+
+Incluye exportación CSV de los intentos con identificadores anónimos, respuestas y métricas. Escapa correctamente los valores y no incluyas datos personales.
+
+No envíes resultados a servidores externos.
+
+Advierte en la documentación que el almacenamiento local pertenece al navegador y dispositivo utilizado. No centraliza automáticamente las respuestas de diferentes participantes.
+
+## 12. Animaciones y accesibilidad
+
+Implementa:
+
+- Transiciones al abrir y cerrar mensajes.
+- Realce al seleccionar palabras.
+- Progreso animado.
+- Aparición gradual de los resultados.
+- Transición entre ejercicios.
+- Feedback visual al confirmar respuestas.
+- Animación discreta al completar una actividad.
+
+Las animaciones no deben impedir la interacción ni ocultar información.
+
+Verifica:
+
+- Móvil de aproximadamente 360 px.
+- Móvil de aproximadamente 390 px.
+- Tableta.
+- Escritorio de 1280 px o más.
+
+Evita desbordamientos horizontales. Utiliza controles semánticos, estados accesibles como `aria-pressed`, foco visible y compatibilidad con teclado y lector de pantalla.
+
+Respeta `prefers-reduced-motion`.
+
+## 13. Calidad y pruebas
+
+Implementa pruebas unitarias y de componentes cuando el entorno lo permita.
+
+Comprueba como mínimo:
+
+- Navegación.
+- Apertura de mensajes.
+- Selección y deselección de palabras.
+- Clasificación.
+- Confirmación de respuestas.
+- Cálculo de métricas.
+- Tratamiento de información insuficiente.
+- Persistencia después de recargar.
+- Recuperación del historial.
+- Exportación CSV.
+- Ausencia de enlaces externos funcionales.
+- Estado inicial sin intentos.
+- Diseño responsive.
+- Recuperación ante almacenamiento corrupto.
+
+No afirmes que una prueba se ejecutó si no fue posible ejecutarla.
+
+## 14. Criterios de aceptación
+
+La aplicación solo se considera terminada cuando:
+
+1. Se puede ejecutar y utilizar.
+2. Las secciones principales funcionan y tienen navegación real.
+3. Existen al menos seis ejercicios completos.
+4. Los mensajes parecen situaciones cotidianas verosímiles.
+5. Existe un aviso general que explica que todo el contenido es simulado.
+6. Ningún mensaje se identifica como legítimo o phishing antes de responder.
+7. Las direcciones y los enlaces no constituyen pistas artificiales por ser evidentemente falsos.
+8. El usuario puede seleccionar y deseleccionar palabras y metadatos.
+9. El sistema identifica aciertos, omisiones y selecciones incorrectas.
+10. Las fórmulas funcionan en los casos límite.
+11. Cada ejercicio incluye retroalimentación educativa.
+12. Los resultados persisten tras recargar la página.
+13. El historial presenta datos realmente guardados.
+14. La exportación CSV funciona.
+15. El diseño oscuro y las animaciones son consistentes.
+16. La aplicación funciona en móviles y computadores.
+17. No hay botones decorativos que aparenten funcionar sin hacerlo.
+18. No se necesita pagar por las funcionalidades esenciales.
+19. Ningún enlace de un ejercicio abre un sitio externo.
+20. Las anotaciones y clasificaciones de referencia son coherentes y están revisadas.
+
+## 15. Orden de implementación
+
+Trabaja en estas fases:
+
+**Fase 1 — Base:** configuración, arquitectura, tipos, datos semilla y navegación.
+
+**Fase 2 — Ejercicios:** bandeja de entrada, mensajes completos, selección de elementos y clasificación.
+
+**Fase 3 — Evaluación:** métricas, puntuaciones, explicaciones y pruebas.
+
+**Fase 4 — Persistencia:** repositorios, historial, dashboard y exportación CSV.
+
+**Fase 5 — Experiencia visual:** identidad gráfica, responsive, animaciones y accesibilidad.
+
+**Fase 6 — Validación:** pruebas, correcciones y comprobación de los criterios de aceptación.
+
+Prioriza una funcionalidad esencial correcta sobre varias funcionalidades secundarias incompletas.
+
+## 16. Entrega final
+
+Entrega:
+
+- Aplicación funcional en la vista previa.
+- Código fuente organizado.
+- Lista de funcionalidades implementadas.
+- Dependencias principales.
+- Resumen de la arquitectura.
+- Fórmulas de evaluación.
+- Resultado real de las pruebas ejecutadas.
+- Instrucciones para ejecutar localmente.
+- Instrucciones para sincronizar con GitHub y publicar utilizando una opción gratuita compatible.
+
+No declares el proyecto terminado si solo has generado pantallas sin verificar su comportamiento.
+
+**Comienza a construir PhishLab siguiendo estas especificaciones. Prioriza el realismo de los mensajes, la validez educativa de las respuestas de referencia y la funcionalidad completa de la selección interactiva de palabras.**
