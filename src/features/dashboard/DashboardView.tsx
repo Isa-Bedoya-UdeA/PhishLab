@@ -8,6 +8,7 @@ import {
   AlertTriangle,
   ArrowRight,
   Target,
+  GraduationCap,
 } from 'lucide-react';
 import { DashboardStats } from '../../domain/types/attempt.ts';
 import { Exercise } from '../../domain/types/exercise.ts';
@@ -21,6 +22,7 @@ export interface DashboardViewProps {
   onGoToInbox: () => void;
   onGoToHistory: () => void;
   onSelectExercise: (id: string) => void;
+  onOpenTutorial?: () => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
@@ -28,6 +30,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onGoToInbox,
   onGoToHistory,
   onSelectExercise,
+  onOpenTutorial,
 }) => {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -103,6 +106,18 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             >
               Historial de intentos
             </Button>
+
+            {onOpenTutorial && (
+              <Button
+                variant="ghost"
+                size="lg"
+                icon={<GraduationCap className="w-5 h-5 text-[#35E0D0]" />}
+                onClick={onOpenTutorial}
+                className="text-[#35E0D0] hover:bg-[#35E0D0]/10"
+              >
+                Práctica guiada (Tutorial)
+              </Button>
+            )}
           </div>
         </div>
       </div>

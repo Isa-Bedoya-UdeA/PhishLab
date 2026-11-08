@@ -79,7 +79,7 @@ export const InteractiveElement: React.FC<InteractiveElementProps> = ({
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       title={element.explanation ? element.explanation : undefined}
-      className={`inline-block px-1 py-0.5 my-0.5 rounded transition-all duration-100 outline-none select-none ${statusClass} ${
+      className={`inline-block px-1.5 py-1 sm:px-1 sm:py-0.5 my-0.5 rounded transition-all duration-100 outline-none select-none touch-manipulation active:scale-[0.98] ${statusClass} ${
         disabled ? 'cursor-default' : ''
       }`}
     >

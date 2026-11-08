@@ -126,11 +126,18 @@ export const EvaluationSummary: React.FC<EvaluationSummaryProps> = ({
         </div>
 
         {/* Reference Explanation Prose */}
-        <div className="mt-5 pt-4 border-t border-[#263A50] text-sm text-[#F1F5F9] leading-relaxed bg-[#08111F]/50 p-4 rounded-xl">
-          <span className="font-semibold text-[#35E0D0] block text-xs uppercase tracking-wider mb-1">
+        <div className="mt-5 pt-4 border-t border-[#263A50] text-sm text-[#F1F5F9] leading-relaxed bg-[#08111F]/50 p-4 rounded-xl space-y-2">
+          <span className="font-semibold text-[#35E0D0] block text-xs uppercase tracking-wider">
             Justificación metodológica de referencia
           </span>
-          {exercise.referenceExplanation}
+          <p>{exercise.referenceExplanation}</p>
+
+          <div className="pt-2 border-t border-[#263A50]/60 text-[11px] text-[#A7B5C7] leading-relaxed flex items-start gap-2">
+            <span className="text-[#35E0D0] font-bold shrink-0">Claridad metodológica:</span>
+            <span>
+              El puntaje ponderado (70% detección de indicios + 30% clasificación global) es un índice experimental y pedagógico de esta investigación, no una certificación formal de competencia en ciberseguridad. Evalúa tu capacidad de fundamentar tus juicios mediante evidencias concretas.
+            </span>
+          </div>
         </div>
       </Card>
 
@@ -208,6 +215,9 @@ export const EvaluationSummary: React.FC<EvaluationSummaryProps> = ({
                 {metrics.tn}
               </span>
             </div>
+          </div>
+          <div className="pt-2 border-t border-[#263A50]/60 text-[11px] text-[#A7B5C7] leading-relaxed">
+            <strong className="text-[#F1F5F9]">Diferenciación conceptual:</strong> La clasificación global refleja tu juicio final, pero la matriz de indicios (TP, FP, FN, TN) mide tu habilidad analítica para fundamentar ese juicio en evidencias concretas y evitar tanto la ingenuidad como la paranoia indiscriminada.
           </div>
         </Card>
       </div>

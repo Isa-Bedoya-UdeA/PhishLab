@@ -67,7 +67,7 @@ export const EmailHeaders: React.FC<EmailHeadersProps> = ({
         title={explanation || `Clic para marcar ${label.toLowerCase()} como indicio`}
         onClick={() => !isEvaluated && onToggleElement(id)}
         disabled={isEvaluated}
-        className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-lg border transition-all text-left max-w-full truncate cursor-pointer ${stateClass} ${
+        className={`inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-2.5 sm:py-1 text-xs rounded-lg border transition-all text-left max-w-full truncate cursor-pointer touch-manipulation active:scale-[0.98] min-h-[36px] sm:min-h-[30px] ${stateClass} ${
           isEvaluated ? 'cursor-default' : ''
         }`}
       >

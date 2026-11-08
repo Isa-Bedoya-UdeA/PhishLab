@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, NavTab } from './components/layout/Navbar.tsx';
 import { Footer } from './components/layout/Footer.tsx';
 import { DisclaimerModal } from './components/layout/DisclaimerModal.tsx';
+import { TutorialModal } from './features/onboarding/TutorialModal.tsx';
+import { ConceptualFrameworkModal } from './features/theory/ConceptualFrameworkModal.tsx';
 import { DashboardView } from './features/dashboard/DashboardView.tsx';
 import { InboxView } from './features/inbox/InboxView.tsx';
 import { ExerciseView } from './features/exercise/ExerciseView.tsx';
@@ -15,6 +17,8 @@ export const App: React.FC = () => {
   const [currentTab, setCurrentTab] = useState<NavTab>('dashboard');
   const [activeExerciseId, setActiveExerciseId] = useState<string | null>(null);
   const [isDisclaimerOpen, setIsDisclaimerOpen] = useState<boolean>(false);
+  const [isTutorialOpen, setIsTutorialOpen] = useState<boolean>(false);
+  const [isTheoryOpen, setIsTheoryOpen] = useState<boolean>(false);
   const [refreshKey, setRefreshKey] = useState<number>(0);
 
   // Check first-time disclaimer prompt
@@ -25,12 +29,30 @@ export const App: React.FC = () => {
     );
     if (!hasAcceptedDisclaimer) {
       setIsDisclaimerOpen(true);
+    } else {
+      // If disclaimer was already accepted, check if tutorial was completed
+      const hasCompletedTutorial = safeStorage.getItem<boolean>(
+        STORAGE_KEYS.TUTORIAL_COMPLETED,
+        false
+      );
+      if (!hasCompletedTutorial) {
+        setIsTutorialOpen(true);
+      }
     }
   }, []);
 
   const handleAcceptDisclaimer = () => {
     safeStorage.setItem(STORAGE_KEYS.DISCLAIMER_ACCEPTED, true);
     setIsDisclaimerOpen(false);
+
+    // Offer onboarding tutorial right after disclaimer acceptance
+    const hasCompletedTutorial = safeStorage.getItem<boolean>(
+      STORAGE_KEYS.TUTORIAL_COMPLETED,
+      false
+    );
+    if (!hasCompletedTutorial) {
+      setIsTutorialOpen(true);
+    }
   };
 
   const handleSelectExercise = (id: string) => {
@@ -82,6 +104,8 @@ export const App: React.FC = () => {
           setCurrentTab(tab);
         }}
         onQuickTrain={handleQuickTrain}
+        onOpenTutorial={() => setIsTutorialOpen(true)}
+        onOpenTheory={() => setIsTheoryOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -103,6 +127,7 @@ export const App: React.FC = () => {
                 onGoToInbox={() => setCurrentTab('inbox')}
                 onGoToHistory={() => setCurrentTab('history')}
                 onSelectExercise={handleSelectExercise}
+                onOpenTutorial={() => setIsTutorialOpen(true)}
               />
             )}
             {currentTab === 'inbox' && (
@@ -120,7 +145,10 @@ export const App: React.FC = () => {
             {currentTab === 'settings' && (
               <SettingsView
                 onOpenDisclaimer={() => setIsDisclaimerOpen(true)}
+                onOpenTheory={() => setIsTheoryOpen(true)}
+                onOpenTutorial={() => setIsTutorialOpen(true)}
                 onDataReset={handleDataReset}
+                onGoToHistory={() => setCurrentTab('history')}
               />
             )}
           </>
@@ -130,6 +158,8 @@ export const App: React.FC = () => {
       {/* Footer */}
       <Footer
         onOpenDisclaimer={() => setIsDisclaimerOpen(true)}
+        onOpenTheory={() => setIsTheoryOpen(true)}
+        onOpenTutorial={() => setIsTutorialOpen(true)}
         onSelectTab={(tab) => {
           setActiveExerciseId(null);
           setCurrentTab(tab);
@@ -140,6 +170,22 @@ export const App: React.FC = () => {
       <DisclaimerModal
         isOpen={isDisclaimerOpen}
         onAccept={handleAcceptDisclaimer}
+      />
+
+      {/* Interactive Guided Onboarding Tutorial Modal */}
+      <TutorialModal
+        isOpen={isTutorialOpen}
+        onClose={() => setIsTutorialOpen(false)}
+        onComplete={() => {
+          setIsTutorialOpen(false);
+          handleQuickTrain();
+        }}
+      />
+
+      {/* Conceptual Framework and Academic Citations Modal */}
+      <ConceptualFrameworkModal
+        isOpen={isTheoryOpen}
+        onClose={() => setIsTheoryOpen(false)}
       />
     </div>
   );

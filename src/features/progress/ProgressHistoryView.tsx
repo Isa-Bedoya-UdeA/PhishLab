@@ -114,6 +114,20 @@ export const ProgressHistoryView: React.FC<ProgressHistoryViewProps> = ({ onSele
         </div>
       </div>
 
+      {/* Local Storage Transparency Notice */}
+      <div className="p-3.5 bg-[#122438] border border-[#35E0D0]/30 rounded-xl flex items-start gap-3 text-xs text-[#A7B5C7]">
+        <AlertTriangle className="w-4 h-4 text-[#FBBF24] shrink-0 mt-0.5" />
+        <div className="space-y-0.5">
+          <span className="text-[#F1F5F9] font-semibold block">
+            Almacenamiento local exclusivo en el navegador
+          </span>
+          <p>
+            Los registros experimentales se conservan únicamente en el <code className="text-[#35E0D0] font-mono text-[11px]">localStorage</code> de este dispositivo.
+            Para asegurar la preservación de los datos antes de borrar la memoria caché o cerrar la prueba de campo, descarga los archivos CSV a continuación.
+          </p>
+        </div>
+      </div>
+
       {/* Export Center Card */}
       {attempts.length > 0 && (
         <Card padding="md" className="bg-[#0D1B2A] border-[#263A50] space-y-3">

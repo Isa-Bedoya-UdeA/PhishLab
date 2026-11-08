@@ -200,12 +200,12 @@ export const EmailViewer: React.FC<EmailViewerProps> = ({
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 shrink-0 pt-1 sm:pt-0">
                       {!isEvaluated && (
                         <button
                           type="button"
                           onClick={() => onToggleElement(link.elementId)}
-                          className={`text-xs px-2.5 py-1 rounded-md border font-medium transition-colors ${
+                          className={`text-xs px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-lg border font-medium transition-all touch-manipulation active:scale-[0.98] min-h-[40px] sm:min-h-[32px] flex items-center justify-center cursor-pointer ${
                             isSelected
                               ? 'bg-[#35E0D0] text-[#08111F] border-[#35E0D0]'
                               : 'bg-[#0D1B2A] text-[#A7B5C7] border-[#263A50] hover:text-[#F1F5F9]'
@@ -218,7 +218,7 @@ export const EmailViewer: React.FC<EmailViewerProps> = ({
                       <button
                         type="button"
                         onClick={() => setInspectingLink(link)}
-                        className="text-xs px-2.5 py-1 rounded-md bg-[#08111F] border border-[#263A50] text-[#A7B5C7] hover:text-[#35E0D0] hover:border-[#35E0D0]/40 flex items-center gap-1 transition-colors"
+                        className="text-xs px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-lg bg-[#08111F] border border-[#263A50] text-[#A7B5C7] hover:text-[#35E0D0] hover:border-[#35E0D0]/40 flex items-center justify-center gap-1.5 transition-all touch-manipulation active:scale-[0.98] min-h-[40px] sm:min-h-[32px] cursor-pointer"
                         title="Inspeccionar dirección URL en panel seguro"
                       >
                         <ExternalLink className="w-3.5 h-3.5" />

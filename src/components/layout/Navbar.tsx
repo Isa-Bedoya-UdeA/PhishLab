@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, PlayCircle, Menu, X } from 'lucide-react';
+import { ShieldCheck, PlayCircle, Menu, X, GraduationCap, BookOpen } from 'lucide-react';
 import { Button } from '../ui/Button.tsx';
 
 export type NavTab = 'dashboard' | 'inbox' | 'history' | 'settings';
@@ -8,9 +8,17 @@ export interface NavbarProps {
   currentTab: NavTab;
   onSelectTab: (tab: NavTab) => void;
   onQuickTrain: () => void;
+  onOpenTutorial: () => void;
+  onOpenTheory: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onQuickTrain }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  currentTab,
+  onSelectTab,
+  onQuickTrain,
+  onOpenTutorial,
+  onOpenTheory,
+}) => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   const navLinks: { id: NavTab; label: string }[] = [
@@ -27,11 +35,11 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onQuick
 
   return (
     <header className="sticky top-0 z-40 bg-[#08111F]/95 backdrop-blur-md border-b border-[#263A50] transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
-        {/* Zone 1: Brand wordmark (single element, no pills) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        {/* Zone 1: Brand wordmark */}
         <button
           onClick={() => handleNavClick('dashboard')}
-          className="flex items-center gap-2.5 text-left text-lg font-bold tracking-tight text-[#F1F5F9] whitespace-nowrap shrink-0 hover:opacity-90 transition-opacity"
+          className="flex items-center gap-2.5 text-left text-lg font-bold tracking-tight text-[#F1F5F9] whitespace-nowrap shrink-0 hover:opacity-90 transition-opacity cursor-pointer"
         >
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#35E0D0] to-[#48C8F5] flex items-center justify-center text-[#08111F] font-black shadow-sm">
             <ShieldCheck className="w-5 h-5 text-[#08111F]" />
@@ -39,8 +47,8 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onQuick
           <span className="font-extrabold tracking-tight">PhishLab</span>
         </button>
 
-        {/* Zone 2: 4 concise single-line nav links */}
-        <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-[#A7B5C7]">
+        {/* Zone 2: Concise nav links */}
+        <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-[#A7B5C7]">
           {navLinks.map((link) => {
             const isActive = currentTab === link.id;
             return (
@@ -62,8 +70,26 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onQuick
           })}
         </nav>
 
-        {/* Zone 3: 1 primary action */}
-        <div className="hidden sm:flex items-center gap-3 shrink-0">
+        {/* Zone 3: Primary Actions & Modal triggers */}
+        <div className="hidden sm:flex items-center gap-2 shrink-0">
+          <button
+            onClick={onOpenTutorial}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#35E0D0] hover:bg-[#122438] transition-colors border border-transparent hover:border-[#35E0D0]/30 cursor-pointer"
+            title="Abrir práctica guiada interactiva"
+          >
+            <GraduationCap className="w-4 h-4" />
+            <span>Tutorial</span>
+          </button>
+
+          <button
+            onClick={onOpenTheory}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#A7B5C7] hover:text-[#F1F5F9] hover:bg-[#122438] transition-colors cursor-pointer"
+            title="Consultar marco teórico y referencias académicas"
+          >
+            <BookOpen className="w-4 h-4" />
+            <span>Marco teórico</span>
+          </button>
+
           <Button
             variant="primary"
             size="sm"
@@ -75,10 +101,10 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onQuick
         </div>
 
         {/* Mobile menu trigger */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-lg text-[#A7B5C7] hover:text-[#F1F5F9] hover:bg-[#122438] transition-colors"
+            className="p-2 rounded-lg text-[#A7B5C7] hover:text-[#F1F5F9] hover:bg-[#122438] transition-colors cursor-pointer"
             aria-label="Abrir menú"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -88,14 +114,14 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onQuick
 
       {/* Mobile navigation drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#263A50] bg-[#0D1B2A] px-4 pt-3 pb-4 space-y-2">
+        <div className="lg:hidden border-b border-[#263A50] bg-[#0D1B2A] px-4 pt-3 pb-4 space-y-2">
           {navLinks.map((link) => {
             const isActive = currentTab === link.id;
             return (
               <button
                 key={link.id}
                 onClick={() => handleNavClick(link.id)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                   isActive
                     ? 'bg-[#122438] text-[#35E0D0] font-semibold'
                     : 'text-[#A7B5C7] hover:bg-[#122438] hover:text-[#F1F5F9]'
@@ -105,7 +131,30 @@ export const Navbar: React.FC<NavbarProps> = ({ currentTab, onSelectTab, onQuick
               </button>
             );
           })}
-          <div className="pt-2">
+
+          <div className="pt-2 border-t border-[#263A50] space-y-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenTutorial();
+              }}
+              className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#35E0D0] hover:bg-[#122438] flex items-center gap-2 cursor-pointer"
+            >
+              <GraduationCap className="w-4 h-4" />
+              <span>Tutorial interactivo</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenTheory();
+              }}
+              className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#A7B5C7] hover:bg-[#122438] flex items-center gap-2 cursor-pointer"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Marco teórico y referencias</span>
+            </button>
+
             <Button
               variant="primary"
               size="md"

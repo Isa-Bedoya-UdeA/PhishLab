@@ -6,6 +6,7 @@ const STORAGE_KEYS = {
   ATTEMPTS: 'phishlab:v1:attempts',
   DISCLAIMER_ACCEPTED: 'phishlab:v1:disclaimer_accepted',
   USER_PREFERENCES: 'phishlab:v1:preferences',
+  TUTORIAL_COMPLETED: 'phishlab:v1:tutorial_completed',
 } as const;
 
 class SafeStorage {
